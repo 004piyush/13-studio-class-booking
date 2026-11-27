@@ -1,0 +1,35 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Maven Start Up Batch script
+# ----------------------------------------------------------------------------
+
+PRG="$0"
+while [ -h "$PRG" ]; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+SAVED="`pwd`"
+cd "`dirname \"$PRG\"`" >/dev/null
+APP_DIR="`pwd -P`"
+cd "$SAVED" >/dev/null
+
+WRAPPER_JAR="$APP_DIR/.mvn/wrapper/maven-wrapper.jar"
+
+if [ -f "$WRAPPER_JAR" ]; then
+  if [ -n "$JAVA_HOME" ] ; then
+    JAVACMD="$JAVA_HOME/bin/java"
+  else
+    JAVACMD="java"
+  fi
+  exec "$JAVACMD" -jar "$WRAPPER_JAR" "$@"
+elif command -v mvn >/dev/null 2>&1; then
+  exec mvn "$@"
+else
+  echo "Error: maven-wrapper.jar not found and mvn not on PATH." >&2
+  exit 1
+fi

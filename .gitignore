@@ -1,9 +1,23 @@
 .env
+.env.*
+!.env.example
 *.log
 .DS_Store
+
+# Private AI context & local rules
 GEMINI.md
+/README.md
 .agents/
 .gemini/
+.context/
+
+# Build & dependency artifacts
 backend/target/
 frontend/node_modules/
 frontend/dist/
+
+.context/
+
+# IDE metadata
+.idea/
+*.iml

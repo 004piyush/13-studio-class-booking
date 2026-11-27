@@ -7,9 +7,9 @@ below, not necessarily the last one; add a **Later reversed:** line to whichever
 
 ## Decision 1
 
-- **Chose:**
-- **Rejected:**
-- **Why:**
+- **Chose:** Storing `dismissed_for_expiry_date` as a `DATE` column on `Member` instead of a boolean `alert_dismissed` flag.
+- **Rejected:** A mutable boolean `alert_dismissed` flag coupled with manual reset logic on membership renewal.
+- **Why:** When a membership enters its 7-day expiration window, staff can dismiss the alert banner. If a boolean were used, dismissing sets `alert_dismissed = true`. When the member later renews their membership (extending `membership_expiry_date` by months or years), the boolean would either need to be manually cleared upon renewal. By tracking the specific expiry date that was dismissed(`dismissed_for_expiry_date`), the query condition `WHERE membership_expiry_date <= CURRENT_DATE + 7 AND (dismissed_for_expiry_date IS NULL OR dismissed_for_expiry_date != membership_expiry_date)` naturally suppresses the alert for that specific expiry date, but cleanly and automatically reactivates the alert when the renewed membership approaches its future expiration date.
 
 ## Decision 2
 
